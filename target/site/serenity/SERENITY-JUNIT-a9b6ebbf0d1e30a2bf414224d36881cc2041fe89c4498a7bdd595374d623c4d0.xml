@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="1" failures="0" name="com.tests.api.Test4ApiChecklist" skipped="0" tests="1" time="15.08" timestamp="2021-09-01 05:13:01"><testcase classname="com.tests.api.Test4ApiChecklist" name="Test checklist"><error type="java.lang.NullPointerException"/><system-err>null&#13;
+com.dao.checklist.ChecklistDao.getChecklistByName(ChecklistDao.java:25)&#13;
+com.steps.api.CardApiSteps.createCheckList(CardApiSteps.java:73)&#13;
+com.tests.api.Test4ApiChecklist.testChecklist(Test4ApiChecklist.java:19)&#13;
+</system-err></testcase></testsuite>
