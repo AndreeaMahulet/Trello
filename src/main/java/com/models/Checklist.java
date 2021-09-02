@@ -7,15 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Checklist extends UserAccess{
-    private String name,id,boardListId;
-
-    public String getBoardListId() {
-        return boardListId;
-    }
-    @JsonProperty("idList")
-    public void setBoardListId(String boardListId) {
-        this.boardListId = boardListId;
-    }
+    private String id,cardListId,name;
 
     public String getName() {
         return name;
@@ -25,21 +17,27 @@ public class Checklist extends UserAccess{
         this.name = name;
     }
 
+//    @JsonProperty("id")
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
 
-
+    @JsonProperty("idCard")
+    public String getCardListId() {
+        return cardListId;
+    }
+    public void setCardListId(String cardListId) {
+        this.cardListId = cardListId;
+    }
     @Override
     public String toString() {
         return "Checklist{" +
-                "name='" + name + '\'' +
                 ", id='" + id + '\'' +
-                ", boardListId='" + boardListId + '\'' +
+                ", name='" + name + '\'' +
+                ", cardListId='" + cardListId + '\'' +
                 '}';
     }
 
@@ -52,15 +50,15 @@ public class Checklist extends UserAccess{
         if (getClass() != obj.getClass())
             return false;
         Checklist other = (Checklist) obj;
-        if (boardListId == null) {
-            if (other.boardListId != null)
-                return false;
-        } else if (!boardListId.equals(other.boardListId))
-            return false;
         if (id == null) {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
+            return false;
+        if (cardListId == null) {
+            if (other.cardListId != null)
+                return false;
+        } else if (!cardListId.equals(other.cardListId))
             return false;
         if (name == null) {
             if (other.name != null)
@@ -74,7 +72,6 @@ public class Checklist extends UserAccess{
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((boardListId == null) ? 0 : boardListId.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;

@@ -21,15 +21,19 @@ public class ChecklistDao implements ChecklistAbstractDao{
     }
 
     @Override
+    public Checklist getChecklistById(String idCard) {
+        return getAllChecklists().parallelStream().filter(item -> item.getId().contentEquals(idCard)).findFirst().orElse(null);
+    }
+    @Override
     public Checklist getChecklistByName(String name) {
         return getAllChecklists().parallelStream().filter(item -> item.getName().contentEquals(name)).findFirst().orElse(null);
     }
 
     @Override
-    public void updateChecklist(String name, Checklist newChecklist) {
+    public void updateChecklist(String idCard, Checklist newChecklist) {
         try {
             SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CHECKLIST, newChecklist,
-                    "name", name);
+                    "idCard", idCard);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }

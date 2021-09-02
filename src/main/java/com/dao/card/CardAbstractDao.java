@@ -12,6 +12,7 @@ public interface CardAbstractDao {
     public List<Card> getAllCards();
 
     public Card getCardByName(String name);
+    public Card getCardById(String id);
 
     public void updateCard(String name, Card newCard);
 

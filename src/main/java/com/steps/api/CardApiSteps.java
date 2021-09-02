@@ -68,11 +68,23 @@ public class CardApiSteps extends AbstractApiSteps{
         cardDao.updateCard(cardName, cardRequest);
     }
     @Step
-    public void createCheckList(String listName, String cardName) {
-        Checklist checklist = checklistDao.getChecklistByName(listName);
-        Checklist checklistRequest = ChecklistFactory.getChecklistInstance(checklist.getId(), cardName);
+    public void createCheckList(String cardName,String checklistName) {
+        Card card=cardDao.getCardByName(cardName);
+        Checklist checklistRequest = ChecklistFactory.getChecklistInstance(card.getId(),checklistName);
         Checklist checklistResponse = createResource(ApiUrlConstants.CHECKLIST_CREATE, checklistRequest, Checklist.class);
         InstanceUtils.mergeObjects(checklistRequest, checklistResponse);
         checklistDao.saveChecklist(checklistRequest);
     }
+    @Step
+    public void createCheckItem(String checklistName,String checklistItem) {
+        Checklist checklist=checklistDao.getChecklistByName(checklistName);
+        System.out.println(checklist.getId());
+        System.out.println(checklist.toString());
+        Checklist checklistRequest = ChecklistFactory.getChecklistItemInstance(checklistItem,checklist.getId());
+        System.out.println(checklistRequest);
+        Checklist checklistResponse = createResource(ApiUrlConstants.CHECKITEM_CREATE, checklistRequest, Checklist.class);
+        InstanceUtils.mergeObjects(checklistRequest, checklistResponse);
+        checklistDao.saveChecklist(checklistRequest);
+    }
+
 }

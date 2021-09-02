@@ -10,5 +10,6 @@ public class ApiUrlConstants {
     public static final String CARD_GET = "/1/cards/{id}";
     public static final String LIST_CREATE = "/1/lists";
     public static final String LIST_GET = "/1/lists/{id}";
-    public static final String CHECKLIST_CREATE="/1/cards/{id}/checklists";
+    public static final String CHECKLIST_CREATE="/1/checklists";
+    public static final String CHECKITEM_CREATE="/1/checklists/{id}/checkItems";
 }

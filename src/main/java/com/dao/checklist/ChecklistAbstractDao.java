@@ -9,7 +9,7 @@ public interface ChecklistAbstractDao {
 
     public List<Checklist> getAllChecklists();
 
+    public Checklist getChecklistById(String cardId);
     public Checklist getChecklistByName(String name);
-
     public void updateChecklist(String name, Checklist newChecklist);
 }

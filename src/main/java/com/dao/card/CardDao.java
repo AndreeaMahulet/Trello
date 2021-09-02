@@ -20,6 +20,10 @@ public class CardDao implements CardAbstractDao {
     public Card getCardByName(String name) {
         return getAllCards().parallelStream().filter(item -> item.getName().contentEquals(name)).findFirst().orElse(null);
     }
+    @Override
+    public Card getCardById(String id) {
+        return getAllCards().parallelStream().filter(item -> item.getId().contentEquals(id)).findFirst().orElse(null);
+    }
 
     @Override
     public void updateCard(String name, Card newCard) {
