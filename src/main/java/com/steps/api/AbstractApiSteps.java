@@ -39,6 +39,15 @@ public class AbstractApiSteps extends ScenarioSteps {
                 .assertThat().statusCode(anyOf(is(201), is(200), is(302)))
                 .extract().as(responseClass);
     }
+    protected static <T> T getResourceParams(String path, Class<T> responseClass, Object param,Object... params) {
+        return given().relaxedHTTPSValidation()
+                .spec(getSpecWithExtraHeaders())
+                .body(getCommonBodyParams())
+                .when().get(path, param,params)
+                .then()
+                .assertThat().statusCode(anyOf(is(201), is(200), is(302)))
+                .extract().as(responseClass);
+    }
     protected static String getNotFoundResourceMessage(String path, Object requestBody, Object... params) {
         return given().relaxedHTTPSValidation()
                 .spec(getSpecWithExtraHeaders())
@@ -69,6 +78,15 @@ public class AbstractApiSteps extends ScenarioSteps {
                 .body(requestBody)
                 .when().post(path)
                 .then().log().body()
+                .assertThat().statusCode(anyOf(is(201), is(200), is(302)))
+                .extract().as(responseClass);
+    }
+    protected static <T> T createResourceParams(String path, Object requestBody, Class<T> responseClass, Object... params) {
+        return given().relaxedHTTPSValidation()
+                .spec(getSpecWithExtraHeaders())
+                .body(requestBody)
+                .when().post(path,params)
+                .then()
                 .assertThat().statusCode(anyOf(is(201), is(200), is(302)))
                 .extract().as(responseClass);
     }

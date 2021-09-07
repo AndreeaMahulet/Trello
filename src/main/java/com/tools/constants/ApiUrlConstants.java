@@ -1,5 +1,7 @@
 package com.tools.constants;
 
+import com.models.Checklist;
+
 public class ApiUrlConstants {
     public static final String BOARD_CREATE = "/1/boards";
     public static final String BOARD_GET = "/1/board/{id}";
@@ -12,4 +14,5 @@ public class ApiUrlConstants {
     public static final String LIST_GET = "/1/lists/{id}";
     public static final String CHECKLIST_CREATE="/1/checklists";
     public static final String CHECKITEM_CREATE="/1/checklists/{id}/checkItems";
+    public static final String CHECKITEM_GET="/1/checklists/{id}/checkItems/{idCheckItem}";
 }

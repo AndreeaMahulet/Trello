@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Checklist extends UserAccess{
-    private String id,cardListId,name;
+    private String id,cardListId,name,checklistItemId;
 
     public String getName() {
         return name;
@@ -17,7 +17,15 @@ public class Checklist extends UserAccess{
         this.name = name;
     }
 
-//    @JsonProperty("id")
+    @JsonProperty("idCheckItem")
+    public String getChecklistItemId() {
+        return checklistItemId;
+    }
+
+    public void setChecklistItemId(String checklistItemId) {
+        this.checklistItemId = checklistItemId;
+    }
+
     public String getId() {
         return id;
     }
@@ -37,7 +45,8 @@ public class Checklist extends UserAccess{
         return "Checklist{" +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", cardListId='" + cardListId + '\'' +
+                ", checklistItemId='" + checklistItemId + '\'' +
+
                 '}';
     }
 
@@ -55,10 +64,10 @@ public class Checklist extends UserAccess{
                 return false;
         } else if (!id.equals(other.id))
             return false;
-        if (cardListId == null) {
-            if (other.cardListId != null)
+        if (checklistItemId == null) {
+            if (other.checklistItemId != null)
                 return false;
-        } else if (!cardListId.equals(other.cardListId))
+        } else if (!checklistItemId.equals(other.checklistItemId))
             return false;
         if (name == null) {
             if (other.name != null)

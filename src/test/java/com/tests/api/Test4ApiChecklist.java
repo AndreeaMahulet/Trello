@@ -21,6 +21,7 @@ public class Test4ApiChecklist extends BaseApiTest{
         cardApiSteps.verifyCardIsPresent(cardName);
         cardApiSteps.createCheckList(cardName,checklistName);
         cardApiSteps.createCheckItem(checklistName,checklistItem);
+//        cardApiSteps.verifyChecklistItemIsPresent(checklistName,checklistItem);
         cardApiSteps.deleteCard(cardName);
         cardApiSteps.verifyCardIsNotPresent(cardName);
     }

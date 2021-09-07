@@ -1,53 +1,41 @@
-package com.dao.checklist;
+package com.dao.checklistItem;
 
-import com.models.Checklist;
+import com.models.ChecklistItem;
 import com.tools.constants.SerenityKeyConstants;
 import com.tools.utils.SerenitySessionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class ChecklistDao implements ChecklistAbstractDao{
-
+public class ChecklistIemDao implements ChecklistItemAbstractDao{
     @Override
-    public void saveChecklist(Checklist checklist) {
-        System.out.println("Saving checklist " + checklist.getName() + " ...");
-        SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.CHECKLIST, checklist);
-    }
-    @Override
-    public void saveChecklistItem(Checklist checklistItem) {
-        System.out.println("Saving checklistItem " + checklistItem.getName() + " ...");
+    public void saveChecklist(ChecklistItem checklistItem) {
+        System.out.println("Saving checklist item " + checklistItem.getName() + " ...");
         SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.CHECKLIST, checklistItem);
     }
 
     @Override
-    public List<Checklist> getAllChecklists() {
+    public List<ChecklistItem> getAllChecklists() {
         return SerenitySessionUtils.getFromSession(SerenityKeyConstants.CHECKLIST);
     }
 
     @Override
-    public Checklist getChecklistById(String idCard) {
+    public ChecklistItem getChecklistById(String idCard) {
         return getAllChecklists().parallelStream().filter(item -> item.getId().contentEquals(idCard)).findFirst().orElse(null);
     }
     @Override
-    public Checklist getChecklistByName(String name) {
+    public ChecklistItem getChecklistByName(String name) {
         return getAllChecklists().parallelStream().filter(item -> item.getName().contentEquals(name)).findFirst().orElse(null);
     }
 
     @Override
-    public void updateChecklist(String idCard, Checklist newChecklist) {
+    public void updateChecklist(String idCard, ChecklistItem newChecklist) {
         try {
             SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CHECKLIST, newChecklist,
                     "idCard", idCard);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public Checklist getChecklistItemId(String checkItemId) {
-        return getAllChecklists().parallelStream().filter(item -> item.getChecklistItemId().contentEquals(checkItemId) ).findFirst().orElse(null);
-
     }
 
 }

@@ -4,10 +4,13 @@ import com.dao.card.CardAbstractDao;
 import com.dao.card.CardDao;
 import com.dao.checklist.ChecklistAbstractDao;
 import com.dao.checklist.ChecklistDao;
+import com.dao.checklistItem.ChecklistIemDao;
+import com.dao.checklistItem.ChecklistItemAbstractDao;
 import com.dao.list.ListAbstractDao;
 import com.dao.list.ListDao;
 import com.models.Card;
 import com.models.Checklist;
+import com.models.ChecklistItem;
 import com.models.List;
 import com.tools.constants.ApiUrlConstants;
 import com.tools.factories.CardFactory;
@@ -24,6 +27,8 @@ public class CardApiSteps extends AbstractApiSteps{
     ListAbstractDao listDao=new ListDao();
     CardAbstractDao cardDao=new CardDao();
     ChecklistAbstractDao checklistDao=new ChecklistDao();
+    ChecklistItemAbstractDao checklistItemDao=new ChecklistIemDao();
+
     @Step
     public void createCard(String listName, String cardName) {
         List list = listDao.getListByName(listName);
@@ -35,6 +40,13 @@ public class CardApiSteps extends AbstractApiSteps{
     public Card getCardFromServer(String name) {
         Card expectedCard = cardDao.getCardByName(name);
         return getResource(ApiUrlConstants.CARD_GET, Card.class, expectedCard.getId());
+    }
+    public Checklist getChecklistFromServer(String id,String itemId ) {
+        Checklist expectedChecklist=checklistDao.getChecklistByName(id);
+        expectedChecklist=ChecklistFactory.getChecklistItemId(itemId,expectedChecklist.getName(),expectedChecklist.getChecklistItemId(),expectedChecklist.getId());
+//        expectedChecklist.setChecklistItemId(expectedChecklist.getChecklistItemId());
+        System.out.println(expectedChecklist);
+        return getResourceParams(ApiUrlConstants.CHECKITEM_GET, Checklist.class, expectedChecklist.getChecklistItemId(),expectedChecklist.getId());
     }
     @Step
     public void verifyCardIsPresent(String name) {
@@ -67,6 +79,7 @@ public class CardApiSteps extends AbstractApiSteps{
         updateResource(ApiUrlConstants.CARD_GET, cardRequest, cardRequest.getId());
         cardDao.updateCard(cardName, cardRequest);
     }
+
     @Step
     public void createCheckList(String cardName,String checklistName) {
         Card card=cardDao.getCardByName(cardName);
@@ -76,15 +89,22 @@ public class CardApiSteps extends AbstractApiSteps{
         checklistDao.saveChecklist(checklistRequest);
     }
     @Step
-    public void createCheckItem(String checklistName,String checklistItem) {
+    public void createCheckItem(String checklistName,String checklistItems) {
         Checklist checklist=checklistDao.getChecklistByName(checklistName);
+//        ChecklistItem checklistItem=checklistItemDao.getChecklistByName(checklistName);
         System.out.println(checklist.getId());
         System.out.println(checklist.toString());
-        Checklist checklistRequest = ChecklistFactory.getChecklistItemInstance(checklistItem,checklist.getId());
+        System.out.println(checklist.getCardListId());
+//        System.out.println(checklist.getChecklistItemId());
+        Checklist checklistRequest = ChecklistFactory.getChecklistItemInstance(checklistItems,checklist.getId(),checklist.getChecklistItemId());
         System.out.println(checklistRequest);
-        Checklist checklistResponse = createResource(ApiUrlConstants.CHECKITEM_CREATE, checklistRequest, Checklist.class);
+        Checklist checklistResponse = createResourceParams(ApiUrlConstants.CHECKITEM_CREATE, checklistRequest, Checklist.class,checklistRequest.getId());
         InstanceUtils.mergeObjects(checklistRequest, checklistResponse);
-        checklistDao.saveChecklist(checklistRequest);
+        checklistDao.saveChecklistItem(checklistRequest);
     }
-
+    @Step
+    public void verifyChecklistItemIsPresent(String id,String checklistItem) {
+        System.out.println(checklistDao.getChecklistById(id));
+        Assert.assertTrue("ChecklistItem is not present!", checklistDao.getChecklistById(id).equals(getChecklistFromServer(id,checklistItem)));
+    }
 }
